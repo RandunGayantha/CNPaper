@@ -177,22 +177,20 @@
         .ad-banner {
             width: 728px;
             height: 90px;
-            background-color: #e5e7eb;
-            border: 1px dashed #9ca3af;
+            /* background-color: #e5e7eb; */ /* Removed placeholder background */
+            /* border: 1px dashed #9ca3af; */ /* Removed placeholder border */
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 1.5rem auto;
             text-align: center;
             font-size: 0.875rem;
-            color: #4b5563;
+            /* color: #4b5563; */ /* Removed placeholder text color */
             border-radius: 0.5rem;
+            overflow: hidden; /* Important if ad content tries to break out */
         }
-        .dark .ad-banner {
-            background-color: #374151;
-            border-color: #6b7280;
-            color: #9ca3af;
-        }
+       /* .dark .ad-banner - No specific dark styles needed if ad handles its own styling */
+
 
         /* Ensure heading and label colors are correct */
         h1, h2, h3, label {
@@ -229,9 +227,7 @@
             height: auto;
             border-radius: 0.5rem;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Soft shadow for the image */
-            /* Removed background and border from image itself */
         }
-        /* .dark .image-placeholder - no specific dark style needed if bg is on wrapper */
 
     </style>
 </head>
@@ -248,15 +244,15 @@
 
         <div class="ad-banner">
             <script type="text/javascript">
-	atOptions = {
-		'key' : '2c13cc73776416f48552130a7d0d721f',
-		'format' : 'iframe',
-		'height' : 90,
-		'width' : 728,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//racesmoulderstamp.com/2c13cc73776416f48552130a7d0d721f/invoke.js"></script>
+                atOptions = {
+                    'key' : '2c13cc73776416f48552130a7d0d721f',
+                    'format' : 'iframe',
+                    'height' : 90,
+                    'width' : 728,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//racesmoulderstamp.com/2c13cc73776416f48552130a7d0d721f/invoke.js"></script>
         </div>
 
         <nav class="mb-8 flex flex-wrap justify-center gap-3 sm:gap-4">
@@ -860,7 +856,7 @@
                 btn.classList.remove(
                     'bg-indigo-600', 'text-white', 'dark:bg-indigo-500', 'dark:hover:bg-indigo-600',
                     'bg-gray-200', 'text-gray-700', 'hover:bg-gray-300', 
-                    'dark:bg-gray-600', 'dark:text-gray-200', 'dark:hover:bg-gray-500' // Adjusted dark secondary
+                    'dark:bg-gray-600', 'dark:text-gray-200', 'dark:hover:bg-gray-500' 
                 );
                 if (i === currentQuestionIndex) {
                     btn.classList.add('bg-indigo-600', 'text-white', 'dark:bg-indigo-500', 'dark:hover:bg-indigo-600');
@@ -902,7 +898,6 @@
             correctAnswerContentEl.innerHTML = '';
 
             updateNavButtonStyles();
-            // Smooth scroll to the top of the main content card, not the whole page
             const mainCard = document.getElementById('question-container');
             if (mainCard) {
                  mainCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -932,8 +927,8 @@
         // Initialize
         createNavButtons();
         const initialDarkMode = localStorage.getItem('darkMode') === 'true';
-        applyTheme(initialDarkMode); // Apply theme first
-        loadQuestion(0); // Then load question which also updates nav buttons based on theme
+        applyTheme(initialDarkMode); 
+        loadQuestion(0); 
 
 
     </script>
