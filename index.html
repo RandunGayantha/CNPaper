@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en" class=""> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Networks Exam Prep</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color-light: #4f46e5; /* Indigo 600 */
+            --primary-color-dark: #6366f1;  /* Indigo 500 */
+            --card-bg-light: #ffffff;
+            --card-bg-dark: #374151; /* Gray 700 */
+            --text-light: #111827; /* Gray 900 for better contrast in light mode */
+            --text-dark: #f3f4f6; /* Gray 100 */
+            --subtle-bg-light: #f3f4f6; /* Gray 100 */
+            --subtle-bg-dark: #1f2937; /* Gray 800 */
+            --border-light: #d1d5db; /* Gray 300 */
+            --border-dark: #4b5563; /* Gray 600 */
+            --image-bg-light: rgba(229, 231, 235, 0.5); /* Very light, semi-transparent gray for image bg */
+            --image-bg-dark: rgba(55, 65, 81, 0.5); /* Very light, semi-transparent dark gray for image bg */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--subtle-bg-light);
+            color: var(--text-light);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .dark body {
+            background-color: var(--subtle-bg-dark);
+            color: var(--text-dark);
+        }
+
+        .question-card {
+            background-color: var(--card-bg-light);
+            border-radius: 0.75rem; /* 12px */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid var(--primary-color-light);
+        }
+        .dark .question-card {
+            background-color: var(--card-bg-dark);
+            border-top-color: var(--primary-color-dark);
+        }
+        /* Specific text color for question text in light mode */
+        #question-text {
+            color: var(--text-light); /* Ensure good contrast */
+        }
+        .dark #question-text {
+            color: #d1d5db; /* Lighter gray for dark mode question text */
+        }
+
+
+        .answer-section {
+            border-left: 4px solid var(--primary-color-light);
+            background-color: #eef2ff; /* Lighter Indigo */
+            color: #312e81; /* Dark Indigo text */
+        }
+        .dark .answer-section {
+            border-left-color: var(--primary-color-dark);
+            background-color: #2c3241; /* Darker, slightly blueish gray */
+            color: #c7d2fe; /* Lighter Indigo text */
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color-light);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #4338ca; /* Darker Indigo 700 */
+        }
+        .dark .btn-primary {
+            background-color: var(--primary-color-dark);
+        }
+        .dark .btn-primary:hover {
+            background-color: #4f46e5; /* Indigo 600 */
+        }
+
+        .btn-secondary {
+            background-color: #e5e7eb; /* Gray 200 */
+            color: #374151; /* Gray 700 */
+        }
+        .btn-secondary:hover {
+            background-color: #d1d5db; /* Gray 300 */
+        }
+        .dark .btn-secondary {
+            background-color: #4b5563; /* Gray 600 */
+            color: #e5e7eb; /* Gray 200 */
+        }
+        .dark .btn-secondary:hover {
+            background-color: #6b7280; /* Gray 500 */
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        th, td {
+            border: 1px solid var(--border-light);
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        .dark th, .dark td {
+            border-color: var(--border-dark);
+        }
+        th {
+            background-color: #f9fafb; /* Gray 50 */
+            font-weight: 600;
+            color: var(--text-light); /* Ensure header text is dark in light mode */
+        }
+        .dark th {
+            background-color: #414a59; /* Darker gray for table headers */
+            color: var(--text-dark);
+        }
+
+        textarea {
+            background-color: var(--card-bg-light);
+            color: var(--text-light);
+            border: 1px solid var(--border-light);
+        }
+        .dark textarea {
+            background-color: #4b5563; /* Gray 600 */
+            color: var(--text-dark);
+            border-color: #6b7280; /* Gray 500 */
+        }
+        .dark textarea::placeholder {
+            color: #9ca3af; /* Gray 400 */
+        }
+
+        textarea, .correct-answer-content {
+            scrollbar-width: thin;
+            scrollbar-color: #9ca3af #e5e7eb;
+        }
+        .dark textarea, .dark .correct-answer-content {
+            scrollbar-color: #6b7280 #374151;
+        }
+        textarea::-webkit-scrollbar, .correct-answer-content::-webkit-scrollbar { width: 8px; }
+        textarea::-webkit-scrollbar-track, .correct-answer-content::-webkit-scrollbar-track { background: #e5e7eb; border-radius: 10px; }
+        .dark textarea::-webkit-scrollbar-track, .dark .correct-answer-content::-webkit-scrollbar-track { background: #374151; }
+        textarea::-webkit-scrollbar-thumb, .correct-answer-content::-webkit-scrollbar-thumb { background-color: #9ca3af; border-radius: 10px; border: 2px solid #e5e7eb; }
+        .dark textarea::-webkit-scrollbar-thumb, .dark .correct-answer-content::-webkit-scrollbar-thumb { background-color: #6b7280; border-color: #374151; }
+
+        .prose { line-height: 1.75; }
+        .dark .prose { color: #d1d5db; }
+        .dark .prose strong { color: #f9fafb; }
+        .dark .prose code { color: #f3f4f6; background-color: #4b5563; padding: 0.1em 0.3em; border-radius: 0.25rem; }
+        .dark .prose a { color: #93c5fd; }
+        .dark .prose ol > li::before { color: #9ca3af; }
+        .dark .prose ul > li::before { background-color: #9ca3af; }
+
+        .correct-answer-content pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: #f0f1f3; /* Slightly off-white */
+            color: #2c3e50; /* Dark blue-gray */
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.875rem;
+            border: 1px solid #e0e1e3;
+        }
+        .dark .correct-answer-content pre {
+            background-color: #262f3d;
+            color: #bdc3c7; /* Lighter gray for pre text */
+            border-color: #3a4659;
+        }
+
+        .ad-banner {
+            width: 728px;
+            height: 90px;
+            background-color: #e5e7eb;
+            border: 1px dashed #9ca3af;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1.5rem auto;
+            text-align: center;
+            font-size: 0.875rem;
+            color: #4b5563;
+            border-radius: 0.5rem;
+        }
+        .dark .ad-banner {
+            background-color: #374151;
+            border-color: #6b7280;
+            color: #9ca3af;
+        }
+
+        /* Ensure heading and label colors are correct */
+        h1, h2, h3, label {
+            color: var(--text-light);
+        }
+        .dark h1, .dark h2, .dark h3, .dark label {
+            color: var(--text-dark);
+        }
+        p.text-gray-600 { /* For developer name in light mode */
+            color: #4b5563;
+        }
+        .dark p.text-gray-400 { /* For developer name in dark mode */
+            color: #9ca3af;
+        }
+        footer p {
+            color: #6b7280; /* Gray 500 for footer in light mode */
+        }
+        .dark footer p {
+            color: #4b5563; /* Gray 600 for footer in dark mode */
+        }
+        
+        .image-placeholder-wrapper { /* New wrapper for image background */
+            background-color: var(--image-bg-light);
+            padding: 1rem;
+            border-radius: 0.75rem; /* Match card radius or slightly less */
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .dark .image-placeholder-wrapper {
+            background-color: var(--image-bg-dark);
+        }
+        .image-placeholder {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Soft shadow for the image */
+            /* Removed background and border from image itself */
+        }
+        /* .dark .image-placeholder - no specific dark style needed if bg is on wrapper */
+
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4 sm:p-6 lg:p-8">
+
+    <div class="w-full max-w-5xl">
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl sm:text-5xl font-bold">Computer Networks Exam Prep</h1>
+            <p id="developer-name" class="text-base text-gray-600 dark:text-gray-400 mt-3">Developed by: Randun Gayantha</p>
+            <button id="dark-mode-toggle" class="mt-6 btn-secondary font-medium py-2.5 px-5 rounded-lg text-sm shadow-sm">
+                Toggle Dark Mode
+            </button>
+        </header>
+
+        <div class="ad-banner">
+            <script type="text/javascript">
+	atOptions = {
+		'key' : '2c13cc73776416f48552130a7d0d721f',
+		'format' : 'iframe',
+		'height' : 90,
+		'width' : 728,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//racesmoulderstamp.com/2c13cc73776416f48552130a7d0d721f/invoke.js"></script>
+        </div>
+
+        <nav class="mb-8 flex flex-wrap justify-center gap-3 sm:gap-4">
+            </nav>
+
+        <main id="question-container" class="question-card p-6 sm:p-8 lg:p-10">
+            <h2 id="question-title" class="text-2xl sm:text-3xl font-semibold mb-6 text-center"></h2>
+            
+            <div id="image-placeholder-wrapper" class="image-placeholder-wrapper hidden">
+                <img id="question-image" src="" alt="Relevant illustration" class="image-placeholder mx-auto">
+            </div>
+
+            <div id="question-text" class="leading-relaxed mb-8 prose max-w-none"></div>
+
+            <div class="mb-8">
+                <label for="user-answer" class="block text-base font-medium mb-2">Your Answer:</label>
+                <textarea id="user-answer" rows="12" class="w-full p-4 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base" placeholder="Compose your detailed answer here..."></textarea>
+            </div>
+
+            <button id="submit-answer-btn" class="w-full sm:w-auto btn-primary font-semibold py-3 px-6 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 text-base">
+                Submit & View Correct Answer
+            </button>
+
+            <div id="correct-answer-section" class="mt-10 hidden">
+                <h3 class="text-xl sm:text-2xl font-semibold mb-4">Correct Answer & Explanation:</h3>
+                <div id="correct-answer-content" class="answer-section p-5 sm:p-6 rounded-lg text-base leading-relaxed max-h-[32rem] overflow-y-auto prose max-w-none">
+                    </div>
+            </div>
+        </main>
+
+        <footer class="mt-12 text-center text-sm text-gray-500 dark:text-gray-400">
+            <p>&copy; 2025 Randun Gayantha. For educational purposes only.</p>
+        </footer>
+    </div>
+
+    <script>
+        const examData = [
+            {
+                id: 'q1',
+                title: 'Question 1: Structured Cabling, Media & OSI',
+                imagePlaceholderURL: 'https://placehold.co/600x200/e0e7ff/3730a3?text=Cabling+Infrastructure', // Indigo theme
+                imageAltText: 'Diagram of Structured Cabling Elements',
+                questionHTML: `
+                    <p class="mb-4"><strong>(a)</strong> Describe the six main elements of a structured cabling system as per TIA/EIA standards. Elaborate on the purpose and key design considerations for the <strong>Equipment Room</strong> and the <strong>Telecommunications Closet</strong>.</p>
+                    <p class="mb-4"><strong>(b)</strong> Compare and contrast Unshielded Twisted Pair (UTP), Shielded Twisted Pair (STP), and Fiber Optic cable as transmission media. Discuss their construction, common applications, at least two advantages, and two disadvantages for each.</p>
+                    <p><strong>(c)</strong> At which layers of the OSI model do the physical transmission media and structured cabling elements primarily operate? Explain your reasoning.</p>
+                `,
+                answerHTML: `
+                    <p class="mb-4"><strong>(a) Six Main Elements of a Structured Cabling System & Details for ER and TC</strong></p>
+                    <p class="mb-3">A structured cabling system is a standardized architecture for telecommunications cabling in commercial buildings. The TIA/EIA-568 standard defines six main elements:</p>
+                    <ol class="list-decimal list-inside space-y-4">
+                        <li><strong>Building Entrance Facilities:</strong> This is the point where the external telecommunication services (e.g., ISP connections, telephone lines) enter the building and connect to the building's internal backbone cabling. It houses the network demarcation point.</li>
+                        <li class="mt-3"><strong>Equipment Room (ER):</strong> A centralized space that houses telecommunications equipment, such as servers, routers, switches, and PBXs. It's where incoming cabling interfaces with electronic equipment and often serves as the main cross-connect (MC) to the backbone cabling.
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-2">
+                                <li><strong>Purpose:</strong> To provide a secure and environmentally controlled space for housing main networking and telecommunications equipment. It acts as a central hub for the network.</li>
+                                <li class="mt-2"><strong>Key Design Considerations for Equipment Room:</strong>
+                                    <ul class="list-disc list-inside ml-5 mt-1 space-y-1">
+                                        <li><strong>Size:</strong> Minimum 14 m² (150 ft²), with a general recommendation of 0.07 m² for every 10 m² of usable floor space.</li>
+                                        <li><strong>Security:</strong> Restricted access is crucial.</li>
+                                        <li><strong>Environmental Control:</strong> Proper HVAC (Heating, Ventilation, and Air Conditioning) is required, preferably a dedicated system. Temperature and EM insulation are important.</li>
+                                        <li><strong>Location:</strong> Should be carefully selected, close to backbone cables, and away from sources of interference.</li>
+                                        <li><strong>Accessibility:</strong> Sufficient space for equipment, racks, and future expansion. Door dimensions should be adequate (e.g., &gt;90cm wide, 2m high).</li>
+                                        <li><strong>Floor Loading:</strong> Must support the weight of equipment.</li>
+                                        <li><strong>Grounding:</strong> Proper grounding is essential (less than 5 Ohms).</li>
+                                        <li><strong>Fire Suppression:</strong> A fire suppression system should be in place.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Backbone Cabling (Vertical Cabling):</strong> Connects entrance facilities, equipment rooms, and telecommunications rooms (TRs) within a building or between buildings in a campus environment. It typically consists of high-bandwidth cables like fiber optics or high-capacity copper.</li>
+                        <li class="mt-3"><strong>Telecommunications Room (TR) / Telecommunications Closet (TC):</strong> This is where horizontal cabling connects to backbone cabling via patch panels and cross-connects. It can also house networking equipment like switches and routers that serve a specific floor or area.
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-2">
+                                <li><strong>Purpose:</strong> To provide a common access point between backbone and horizontal distribution pathways, housing connections and potentially local network equipment.</li>
+                                <li class="mt-2"><strong>Key Design Considerations for Telecommunications Closet:</strong>
+                                    <ul class="list-disc list-inside ml-5 mt-1 space-y-1">
+                                        <li><strong>Location:</strong> Preferably in the core area of the floor it serves. Multiple TCs may be needed if the floor area is large (&gt;1000 m²) or horizontal cable runs exceed 90m.</li>
+                                        <li><strong>Environmental Control:</strong> Similar to ER, requiring HVAC, security, and fire protection.</li>
+                                        <li><strong>Power:</strong> Desirable to have a dedicated power panel.</li>
+                                        <li><strong>Fire Safety:</strong> Room penetrations must be properly fire-stopped.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Horizontal Cabling:</strong> Extends from the TR/TC to the individual work area outlets. It includes the cables, outlets, terminations, and cross-connections. The maximum horizontal cable length is typically 90 meters.</li>
+                        <li class="mt-3"><strong>Work Area (WA):</strong> The space where end-user equipment (computers, phones, printers) is located and connects to the horizontal cabling system via outlets and patch cords. Sufficient outlets should be planned based on application needs.</li>
+                    </ol>
+                    <br>
+                    <p class="mb-4"><strong>(b) Comparison of Transmission Media</strong></p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Unshielded Twisted Pair (UTP)</th>
+                                <th>Shielded Twisted Pair (STP)</th>
+                                <th>Fiber Optic Cable</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Construction</strong></td>
+                                <td>Consists of pairs of insulated copper wires twisted together. No overall shield. Outer plastic jacket.</td>
+                                <td>Similar to UTP, but with an additional metallic shield enclosing the twisted pairs (either individual pairs or overall, or both) to reduce EMI.</td>
+                                <td>Consists of a core (glass or plastic), cladding (reflects light back into the core), coating, strengthening fibers, and an outer cable jacket.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Common Apps</strong></td>
+                                <td>LANs (Ethernet), telephone lines, home networks, office networks.</td>
+                                <td>LANs in environments with high EMI (e.g., factories, airports), high-speed Ethernet.</td>
+                                <td>Long-distance telecommunications, high-speed LAN/WAN backbones, data centers, internet infrastructure.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Advantages</strong></td>
+                                <td>1. Inexpensive and easy to install.<br>2. Widely available and understood technology.</td>
+                                <td>1. Better noise immunity (EMI/crosstalk reduction) than UTP.<br>2. Can support higher data rates in noisy environments.</td>
+                                <td>1. Very high bandwidth and data rates.<br>2. Immune to EMI and crosstalk; lower attenuation.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Disadvantages</strong></td>
+                                <td>1. Susceptible to EMI and crosstalk.<br>2. Limited bandwidth and distance compared to fiber.</td>
+                                <td>1. More expensive and difficult to install than UTP (requires proper grounding of shield).<br>2. Heavier and less flexible than UTP.</td>
+                                <td>1. More expensive media and installation (requires specialized tools and expertise).<br>2. More fragile than copper cables if not handled properly.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <p class="mb-4"><strong>(c) OSI Layers for Physical Media and Structured Cabling</strong></p>
+                    <p class="mb-3">Physical transmission media (UTP, STP, Fiber Optic) and the elements of structured cabling primarily operate at <strong>Layer 1 (Physical Layer)</strong> of the OSI model.</p>
+                    <p class="mb-3"><strong>Reasoning:</strong> The Physical Layer is responsible for the transmission and reception of raw bit streams over a physical medium. This includes:</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>Defining the electrical, mechanical, and procedural characteristics of the physical link (e.g., voltage levels, data rates, physical connectors, cable specifications).</li>
+                        <li>The cables themselves are the medium through which the bits (represented as electrical signals or light pulses) travel.</li>
+                        <li>Structured cabling elements like patch panels, outlets, and the overall cabling layout provide the physical infrastructure for these Layer 1 connections.</li>
+                    </ul>
+                    <p>While elements like switches (often found in Telecommunications Closets) operate at Layer 2 (Data Link Layer), the cabling infrastructure itself is fundamentally a Layer 1 concern.</p>
+                `
+            },
+            {
+                id: 'q2',
+                title: 'Question 2: IP Addressing, Subnetting, and Routing',
+                imagePlaceholderURL: 'https://placehold.co/600x200/e0e7ff/3730a3?text=IP+Addressing+Concept', // Indigo theme
+                imageAltText: 'Visual of IP Subnetting',
+                questionHTML: `
+                    <p class="mb-4"><strong>(a)</strong> An organization is assigned the IP address block 200.50.100.0/25.
+                        <ol type="i" class="list-lower-roman list-inside ml-5 space-y-2">
+                            <li>What is the subnet mask in dotted decimal notation?</li>
+                            <li>How many subnets can be created if the organization needs to further subnet this block using a /28 mask for each new subnet?</li>
+                            <li>For one of these /28 subnets (e.g., the first one), determine the Network IP address, the Broadcast IP address, and the range of usable host IP addresses. Show your calculations/reasoning.</li>
+                        </ol>
+                    </p>
+                    <p class="mb-4"><strong>(b)</strong> Differentiate between static routing and dynamic routing. Discuss two advantages and two disadvantages for each type of routing. In what specific scenarios would static routing be preferred?</p>
+                    <p><strong>(c)</strong> Explain the difference between public IP addresses and private IP addresses. List the three main private IPv4 address ranges.</p>
+                `,
+                answerHTML: `
+                    <p class="mb-4"><strong>(a) IP Addressing and Subnetting</strong></p>
+                    <p class="mb-3">Given IP address block: 200.50.100.0/25</p>
+                    <p class="mb-3"><strong>i. Subnet mask in dotted decimal notation for /25:</strong><br>
+                    A /25 mask means the first 25 bits are network bits (set to 1) and the remaining (32 - 25 = 7) bits are host bits (set to 0).<br>
+                    In binary: <code>11111111.11111111.11111111.10000000</code><br>
+                    Converting each octet to decimal:<br>
+                    <code>11111111</code> = 255<br>
+                    <code>11111111</code> = 255<br>
+                    <code>11111111</code> = 255<br>
+                    <code>10000000</code> = 128<br>
+                    So, the subnet mask is <strong>255.255.255.128</strong>.</p>
+
+                    <p class="mb-3"><strong>ii. Number of subnets if further subnetted using a /28 mask:</strong><br>
+                    The original block is /25. The new subnets will be /28.<br>
+                    Number of bits borrowed for subnetting = New mask bits - Original mask bits = 28 - 25 = 3 bits.<br>
+                    Number of possible subnets = 2<sup>number of borrowed bits</sup> = 2<sup>3</sup> = <strong>8 subnets</strong>.</p>
+
+                    <p class="mb-3"><strong>iii. For the first /28 subnet:</strong><br>
+                    The original block is 200.50.100.0/25. The last octet is 0 in binary <code>00000000</code>. The /25 mask means the network part of the last octet is the first bit.<br>
+                    The network is 200.50.100.0. The host range for this /25 network is 200.50.100.1 to 200.50.100.126, with broadcast 200.50.100.127.</p>
+                    <p class="mb-3">We are subnetting this /25 block into /28 subnets.<br>
+                    A /28 mask means 28 network bits and (32 - 28 = 4) host bits.<br>
+                    Number of addresses per /28 subnet = 2<sup>number of host bits</sup> = 2<sup>4</sup> = 16 addresses.</p>
+                    <p class="mb-3">The original network starts at 200.50.100.0.<br>
+                    The subnets will increment by 16 in the last octet.</p>
+                    <ul class="list-disc list-inside">
+                        <li><strong>First /28 Subnet:</strong>
+                            <ul class="list-disc list-inside ml-5 space-y-1">
+                                <li><strong>Network IP address:</strong> The starting address of the block is 200.50.100.0. So, the first /28 subnet will be <strong>200.50.100.0/28</strong>. (All host bits are 0)</li>
+                                <li><strong>Broadcast IP address:</strong> This is the last address in this subnet. Since there are 16 addresses (0-15), the broadcast address will be 200.50.100.15. (All host bits are 1). So, the Broadcast IP is <strong>200.50.100.15</strong>.</li>
+                                <li><strong>Range of usable host IP addresses:</strong> This is from the Network IP + 1 to the Broadcast IP - 1. Usable range: <strong>200.50.100.1 to 200.50.100.14</strong>.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <br>
+                    <p class="mb-4"><strong>(b) Static vs. Dynamic Routing</strong></p>
+                    <table>
+                        <thead>
+                            <tr><th>Feature</th><th>Static Routing</th><th>Dynamic Routing</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Definition</strong></td>
+                                <td>Routes are manually configured in the routing table by a network administrator.</td>
+                                <td>Routers automatically learn and update routing information from other routers using routing protocols.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Advantages</strong></td>
+                                <td>1. <strong>Security:</strong> No routes are advertised, reducing the risk of routing information interception.<br>2. <strong>Low Overhead:</strong> Uses less bandwidth and CPU resources as no routing updates are exchanged or calculated.</td>
+                                <td>1. <strong>Scalability & Automation:</strong> Automatically adapts to network topology changes and discovers new networks.<br>2. <strong>Redundancy:</strong> Can find alternative paths if a primary path fails.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Disadvantages</strong></td>
+                                <td>1. <strong>Manual Effort:</strong> Time-consuming to configure and maintain, especially in large or changing networks.<br>2. <strong>No Automatic Re-routing:</strong> If a path fails, manual intervention is required to update routes.</td>
+                                <td>1. <strong>Resource Intensive:</strong> Consumes bandwidth for routing updates and CPU for calculations.<br>2. <strong>Complexity:</strong> More complex to configure and troubleshoot initially. Can be less secure if not properly configured.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="mt-3 mb-3"><strong>Static routing is preferred in scenarios such as:</strong></p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Small, stable networks that are not expected to grow significantly.</li>
+                        <li>Stub networks (networks with only one exit point).</li>
+                        <li>Implementing a default route to an ISP.</li>
+                    </ul>
+                    <br>
+                    <p class="mb-4"><strong>(c) Public vs. Private IP Addresses</strong></p>
+                    <p class="mb-3"><strong>Public IP Addresses:</strong></p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Scope:</strong> Global and unique on the internet.</li>
+                        <li><strong>Purpose:</strong> Used to identify devices directly connected to the internet, allowing them to be reachable from anywhere on the global internet.</li>
+                        <li><strong>Assignment:</strong> Assigned by Internet Service Providers (ISPs) or regional internet registries (RIRs).</li>
+                        <li><strong>Visibility:</strong> Visible from the internet.</li>
+                    </ul>
+                    <p class="mt-3 mb-3"><strong>Private IP Addresses:</strong></p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Scope:</strong> Local, unique only within a specific private network (e.g., a home or office LAN). Not routable on the public internet.</li>
+                        <li><strong>Purpose:</strong> Used to identify devices within a local network, allowing them to communicate with each other without needing a globally unique IP address.</li>
+                        <li><strong>Assignment:</strong> Assigned by a local network administrator or automatically by a DHCP server (often on a router) within the private network.</li>
+                        <li><strong>Visibility:</strong> Not visible directly from the internet. Devices using private IPs typically access the internet via Network Address Translation (NAT).</li>
+                    </ul>
+                    <p class="mt-3 mb-3"><strong>Three Main Private IPv4 Address Ranges:</strong></p>
+                    <ol class="list-decimal list-inside space-y-1">
+                        <li><strong>10.0.0.0 to 10.255.255.255</strong> (Class A private range)</li>
+                        <li><strong>172.16.0.0 to 172.31.255.255</strong> (Class B private range)</li>
+                        <li><strong>192.168.0.0 to 192.168.255.255</strong> (Class C private range)</li>
+                    </ol>
+                `
+            },
+            {
+                id: 'q3',
+                title: 'Question 3: OSI Model (Transport & Application Layers) and Protocols',
+                imagePlaceholderURL: 'https://placehold.co/600x250/e0e7ff/3730a3?text=OSI+Transport+Layer', // Indigo theme
+                imageAltText: 'Diagram of TCP 3-Way Handshake',
+                questionHTML: `
+                    <p class="mb-4"><strong>(a)</strong> Explain the primary functions of the Transport Layer in the OSI model. Compare and contrast TCP (Transmission Control Protocol) and UDP (User Datagram Protocol) in terms of reliability, connection setup, header size, and typical applications.</p>
+                    <p class="mb-4"><strong>(b)</strong> Describe the TCP three-way handshake process used for connection establishment. You may use a diagram to illustrate the process.</p>
+                    <p><strong>(c)</strong> What is the role of port numbers at the Transport Layer? Describe the three categories of port numbers (Well-Known, Registered, Dynamic/Private) and provide two examples of Application Layer protocols and their associated well-known port numbers.</p>
+                `,
+                answerHTML: `
+                    <p class="mb-4"><strong>(a) Transport Layer Functions, TCP vs. UDP</strong></p>
+                    <p class="mb-3">The <strong>Transport Layer (Layer 4)</strong> of the OSI model is primarily responsible for providing <strong>process-to-process communication</strong> between applications running on different hosts. Its key functions include:</p>
+                    <ul class="list-disc list-inside space-y-2 mb-4">
+                        <li><strong>Segmentation and Reassembly:</strong> Dividing data from upper-layer applications into smaller segments for transmission and reassembling them at the destination.</li>
+                        <li><strong>Port Addressing (Service Point Addressing):</strong> Ensuring data is delivered to the correct application process on the destination host using port numbers.</li>
+                        <li><strong>Connection Control (for connection-oriented protocols like TCP):</strong> Establishing, maintaining, and terminating connections.</li>
+                        <li><strong>Flow Control:</strong> Managing the rate of data transmission to prevent overwhelming the receiver.</li>
+                        <li><strong>Error Control:</strong> Detecting and potentially correcting errors that occur during transmission (e.g., through acknowledgments and retransmissions in TCP).</li>
+                    </ul>
+                    <p class="mb-3"><strong>Comparison of TCP and UDP:</strong></p>
+                    <table>
+                        <thead>
+                            <tr><th>Feature</th><th>TCP (Transmission Control Protocol)</th><th>UDP (User Datagram Protocol)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Reliability</strong></td>
+                                <td><strong>Reliable:</strong> Guarantees delivery of data in order, without errors or loss, through acknowledgments and retransmissions.</td>
+                                <td><strong>Unreliable (Best-effort):</strong> No guarantee of delivery, order, or error checking. Packets may be lost, duplicated, or arrive out of order.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Connection Setup</strong></td>
+                                <td><strong>Connection-oriented:</strong> Establishes a connection (three-way handshake) before data transfer and terminates it afterward.</td>
+                                <td><strong>Connectionless:</strong> No prior connection is established. Packets are sent independently.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Header Size</strong></td>
+                                <td>Larger header (minimum 20 bytes) due to sequence numbers, acknowledgment numbers, window size, etc.</td>
+                                <td>Smaller header (8 bytes) due to its simplicity.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Flow Control</strong></td>
+                                <td>Provides flow control using sliding windows.</td>
+                                <td>No inherent flow control.</td>
+                            </tr>
+                             <tr>
+                                <td><strong>Data Recovery</strong></td>
+                                <td>Provides data recovery for lost or corrupted data.</td>
+                                <td>No data recovery.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Speed</strong></td>
+                                <td>Slower due to overhead of connection management, acknowledgments, and flow/error control.</td>
+                                <td>Faster due to less overhead.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Typical Apps</strong></td>
+                                <td>Web browsing (HTTP/HTTPS), Email (SMTP, POP3), File Transfer (FTP), SSH, Telnet. Where reliability is critical.</td>
+                                <td>Streaming video/audio (VoIP), Online gaming, DNS, DHCP, TFTP. Where speed and low overhead are more important than perfect reliability.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <p class="mb-4"><strong>(b) TCP Three-Way Handshake</strong></p>
+                    <p class="mb-3">The TCP three-way handshake is used to establish a connection between a client and a server before any data is exchanged. The process is as follows:</p>
+                    <pre>
+      Client                                     Server
+        |                                          |
+        |--------------- SYN (SEQ=x) ------------->|  Step 1: Client sends SYN
+        |                                          |          (synchronize) segment
+        |                                          |          with an initial sequence
+        |                                          |          number (x).
+        |                                          |
+        |<---------- SYN-ACK (SEQ=y, ACK=x+1) -----|  Step 2: Server receives SYN,
+        |                                          |          replies with SYN-ACK
+        |                                          |          (synchronize-acknowledge)
+        |                                          |          segment. It acknowledges
+        |                                          |          client's SYN (ACK=x+1)
+        |                                          |          and sends its own initial
+        |                                          |          sequence number (y).
+        |                                          |
+        |--------------- ACK (SEQ=x+1, ACK=y+1) -->|  Step 3: Client receives SYN-ACK,
+        |                                          |          sends an ACK (acknowledge)
+        |                                          |          segment. It acknowledges
+        |                                          |          server's SYN (ACK=y+1).
+        |                                          |
+        +------------------------------------------+
+                Connection Established
+                    </pre>
+                    <ul class="list-disc list-inside space-y-2 mt-3 mb-4">
+                        <li><strong>Step 1 (SYN):</strong> The client wants to establish a connection with the server. It sends a segment with the SYN (Synchronize Sequence Numbers) flag set, along with its own initial sequence number (ISN), say <code>x</code>.</li>
+                        <li><strong>Step 2 (SYN-ACK):</strong> The server, upon receiving the SYN segment, responds with a segment that has both SYN and ACK flags set. It acknowledges the client's ISN by setting the acknowledgment number to <code>x+1</code>. The server also chooses its own ISN, say <code>y</code>.</li>
+                        <li><strong>Step 3 (ACK):</strong> The client receives the server's SYN-ACK segment. It sends an acknowledgment segment back to the server. This segment has the ACK flag set, and the acknowledgment number is set to <code>y+1</code> (acknowledging the server's ISN).</li>
+                    </ul>
+                    <p>Once these three steps are completed, the TCP connection is established, and data transfer can begin.</p>
+                    <br>
+                    <p class="mb-4"><strong>(c) Role of Port Numbers and Categories</strong></p>
+                    <p class="mb-3">At the Transport Layer, <strong>port numbers</strong> are used to identify specific application processes running on a host. When data arrives at a host, the port number in the segment header tells the operating system which application process should receive the data. This allows multiple applications on a host to use the network simultaneously (demultiplexing).</p>
+                    <p class="mb-3">The Internet Assigned Numbers Authority (IANA) has divided the 16-bit port number space (0-65535) into three categories:</p>
+                    <ol class="list-decimal list-inside space-y-3">
+                        <li><strong>Well-Known Ports (0 to 1023):</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li>These are reserved for common services and applications provided by server processes.</li>
+                                <li>Client applications use these port numbers to request services from servers that are listening on these specific ports.</li>
+                                <li>Examples:
+                                    <ul class="list-disc list-inside ml-5 mt-1 space-y-1">
+                                        <li><strong>HTTP (Hypertext Transfer Protocol):</strong> Port 80</li>
+                                        <li><strong>FTP (File Transfer Protocol):</strong> Port 21 (for control), Port 20 (for data)</li>
+                                        <li><strong>SMTP (Simple Mail Transfer Protocol):</strong> Port 25</li>
+                                        <li><strong>HTTPS (HTTP Secure):</strong> Port 443</li>
+                                        <li><strong>DNS (Domain Name System):</strong> Port 53 (typically UDP, sometimes TCP)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Registered Ports (1024 to 49151):</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li>These can be registered by software vendors for specific applications or services.</li>
+                                <li>Upon request, IANA can assign a port number from this range for a particular application.</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Dynamic/Private/Ephemeral Ports (49152 to 65535):</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li>These are not registered or assigned to any specific service.</li>
+                                <li>Client applications typically use these ports dynamically as their source port when initiating a connection to a server. The client OS usually assigns a temporary port from this range for the duration of the connection.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                `
+            },
+            {
+                id: 'q4',
+                title: 'Question 4: Network Management and Security Principles',
+                imagePlaceholderURL: 'https://placehold.co/600x200/e0e7ff/3730a3?text=Security+Principles+(CIA)', // Indigo theme
+                imageAltText: 'Illustration of CIA Triad (Confidentiality, Integrity, Availability)',
+                questionHTML: `
+                    <p class="mb-4"><strong>(a)</strong> Define network management. Describe the five functional areas of network management as defined by the ISO model (FCAPS). For each area, explain its primary goal and provide one example of a task performed.</p>
+                    <p class="mb-4"><strong>(b)</strong> Explain the three core principles of information security: Confidentiality, Integrity, and Availability (the CIA triad). Provide an example of a network security measure that helps uphold each of these principles.</p>
+                    <p><strong>(c)</strong> What are the roles of Authentication, Authorization, and Accounting (AAA) in maintaining network security?</p>
+                `,
+                answerHTML: `
+                    <p class="mb-4"><strong>(a) Network Management and FCAPS</strong></p>
+                    <p class="mb-3"><strong>Network management</strong> refers to the broad range of activities, methods, procedures, and tools used to administer, operate, and maintain computer networks. Its overall goal is to ensure that network resources are available to users efficiently, effectively, and with optimal performance and security.</p>
+                    <p class="mb-3">The ISO model divides network management into five functional areas, often remembered by the acronym <strong>FCAPS</strong>:</p>
+                    <ol class="list-decimal list-inside space-y-4">
+                        <li><strong>Fault Management:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Goal:</strong> To detect, isolate, diagnose, and correct network faults or problems to ensure the network remains operational and reliable.</li>
+                                <li><strong>Example Task:</strong> Monitoring network devices for error messages or alarms (e.g., a router interface going down), then using diagnostic tools (like ping or traceroute) to pinpoint the location of the fault, and finally taking corrective action such as rebooting a device or replacing a faulty cable.</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Configuration Management:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Goal:</strong> To collect and store configurations from network devices, manage changes to these configurations, and track the inventory of network devices and their hardware/software versions.</li>
+                                <li><strong>Example Task:</strong> Backing up the configuration of a core switch, documenting a change to a firewall's access control list (ACL), or deploying a standardized software version to all routers in a specific branch.</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Accounting Management (or Administration Management):</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Goal:</strong> To track the usage of network resources by users or departments for purposes such as billing, capacity planning, and ensuring equitable resource distribution.</li>
+                                <li><strong>Example Task:</strong> Monitoring the bandwidth consumed by different departments in an organization to allocate costs appropriately or to identify trends in network usage that might require upgrades.</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Performance Management:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Goal:</strong> To monitor and measure various aspects of network performance to ensure that the network is operating at acceptable levels and to identify potential bottlenecks or areas for optimization.</li>
+                                <li><strong>Example Task:</strong> Collecting statistics on network throughput, latency (delay), packet loss, and device CPU utilization to ensure Service Level Agreements (SLAs) are being met and to proactively identify links or devices that are becoming congested.</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Security Management:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Goal:</strong> To protect the network and its resources from unauthorized access, misuse, modification, or denial of service. This involves controlling access to network resources according to security policies.</li>
+                                <li><strong>Example Task:</strong> Configuring and managing firewalls, intrusion detection/prevention systems (IDS/IPS), managing user accounts and access privileges, and monitoring the network for security breaches or suspicious activity.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <br>
+                    <p class="mb-4"><strong>(b) The CIA Triad</strong></p>
+                    <p class="mb-3">The CIA triad is a fundamental model for guiding information security policies and practices. The three principles are:</p>
+                    <ol class="list-decimal list-inside space-y-4">
+                        <li><strong>Confidentiality:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Principle:</strong> Ensuring that information is not disclosed to unauthorized individuals, entities, or processes. It's about keeping secrets secret and preventing unauthorized viewing of data.</li>
+                                <li><strong>Network Security Measure Example:</strong> <strong>Encryption</strong> of data transmitted over the network (e.g., using HTTPS for web traffic or VPNs for remote access). If an attacker intercepts the encrypted data, they cannot understand it without the decryption key.</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Integrity:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Principle:</strong> Maintaining the accuracy, consistency, and trustworthiness of data over its entire lifecycle. Data should not be improperly modified, and any unauthorized changes should be detectable.</li>
+                                <li><strong>Network Security Measure Example:</strong> Using <strong>digital signatures</strong> or <strong>hashing algorithms</strong> (like MD5 or SHA-256) to verify that data transmitted over the network (e.g., a software download or an important file) has not been altered in transit. The receiver can calculate the hash of the received data and compare it with the sender's hash.</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Availability:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Principle:</strong> Ensuring that information and network resources are accessible and usable by authorized users when needed. Systems should remain operational and protected against disruptions.</li>
+                                <li><strong>Network Security Measure Example:</strong> Implementing <strong>redundant network links or devices</strong> (e.g., multiple internet connections, backup routers/switches) and <strong>Distributed Denial of Service (DDoS) mitigation services</strong>. These measures help ensure that the network remains functional even if one component fails or if it's under attack.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <br>
+                    <p class="mb-4"><strong>(c) Roles of Authentication, Authorization, and Accounting (AAA)</strong></p>
+                    <p class="mb-3">AAA is a security framework for controlling access to computer resources, enforcing policies, auditing usage, and providing the information necessary to bill for services. The roles are:</p>
+                    <ol class="list-decimal list-inside space-y-4">
+                        <li><strong>Authentication:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Role:</strong> Verifying the identity of a user, device, or process trying to access a network resource. It answers the question, "Who are you?"</li>
+                                <li><strong>How it works:</strong> Typically involves providing credentials like a username and password, a digital certificate, a smart card, or biometric data. The system checks these credentials against a database of authorized users.</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Authorization:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Role:</strong> Determining what an authenticated user, device, or process is allowed to do or access after their identity has been verified. It answers the question, "What are you allowed to do?"</li>
+                                <li><strong>How it works:</strong> Based on the authenticated identity, authorization policies define specific permissions, such as which files a user can read/write, which network segments they can access, or which commands they can execute on a device.</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Accounting (or Auditing):</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Role:</strong> Tracking the actions of an authenticated and authorized user, device, or process. It answers the question, "What did you do?"</li>
+                                <li><strong>How it works:</strong> Logging information such as login times, resources accessed, amount of data transferred, and commands executed. This information is vital for troubleshooting, security investigations (detecting misuse), capacity planning, and billing.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p class="mt-3">Together, AAA provides a comprehensive mechanism for securing network access and managing user activity.</p>
+                `
+            },
+            {
+                id: 'q5',
+                title: 'Question 5: Network Attacks and Defense',
+                imagePlaceholderURL: 'https://placehold.co/600x300/e0e7ff/3730a3?text=Cyber+Defense+Shield', // Indigo theme
+                imageAltText: 'Graphic representing the Cyber Kill Chain stages',
+                questionHTML: `
+                    <p class="mb-4"><strong>(a)</strong> Describe the seven stages of the Lockheed Martin Cyber Kill Chain model. For each stage, provide a brief explanation and a realistic example of an attacker's activity.</p>
+                    <p class="mb-4"><strong>(b)</strong> Why is understanding the Cyber Kill Chain important for network defense? Briefly suggest one potential defensive action that could be taken at the <strong>Delivery</strong> stage and one at the <strong>Installation</strong> stage to disrupt an attack.</p>
+                    <p><strong>(c)</strong> What are the primary functions of a Firewall in network security? How does it differ from an Intrusion Detection System (IDS)?</p>
+                `,
+                answerHTML: `
+                    <p class="mb-4"><strong>(a) Seven Stages of the Cyber Kill Chain</strong></p>
+                    <p class="mb-3">The Lockheed Martin Cyber Kill Chain model describes the typical stages an adversary goes through to execute an attack. Understanding these stages helps defenders to identify and mitigate threats.</p>
+                    <ol class="list-decimal list-inside space-y-4">
+                        <li><strong>Reconnaissance:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Explanation:</strong> The attacker gathers information about the target. This can include identifying target systems, network infrastructure, employee information, vulnerabilities, and security policies.</li>
+                                <li><strong>Example:</strong> An attacker uses tools like Nmap to scan the target organization's IP address range for open ports and services, or searches social media like LinkedIn for employee names and email address formats.</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Weaponization:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Explanation:</strong> The attacker creates a deliverable malicious payload by combining an exploit (to take advantage of a vulnerability) with a backdoor or other malware.</li>
+                                <li><strong>Example:</strong> An attacker crafts a Microsoft Word document with a malicious macro (the payload) that exploits a known vulnerability in Microsoft Office (the exploit).</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Delivery:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Explanation:</strong> The attacker transmits the weaponized payload to the target environment.</li>
+                                <li><strong>Example:</strong> The attacker sends the malicious Word document created in the weaponization stage as an attachment in a spear-phishing email to an employee of the target organization. Other methods include infected USB drives or compromised websites.</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Exploitation:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Explanation:</strong> The malicious payload is triggered, exploiting a vulnerability on the target system to gain initial access or execute code.</li>
+                                <li><strong>Example:</strong> The employee opens the malicious Word document, enabling macros, which then run the exploit code, allowing the attacker's malware to execute on the employee's computer.</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Installation:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Explanation:</strong> The attacker installs malware or other tools on the compromised system to establish persistence and maintain access for future operations. This could involve installing a Remote Access Trojan (RAT), backdoor, or rootkit.</li>
+                                <li><strong>Example:</strong> The malware executed during the exploitation stage downloads and installs a RAT on the victim's computer, configuring it to start automatically when the computer boots.</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Command and Control (C2 or C&C):</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Explanation:</strong> The installed malware establishes an outbound communication channel to a server controlled by the attacker, allowing the attacker to remotely control the compromised system, send commands, and exfiltrate data.</li>
+                                <li><strong>Example:</strong> The RAT on the compromised computer connects to the attacker's C2 server over the internet, waiting for instructions or sending system information.</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Actions on Objectives (Exfiltration/Impact):</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Explanation:</strong> The attacker performs actions to achieve their ultimate goals. This could include data theft (exfiltration), data destruction, system disruption, ransomware deployment, or using the compromised system as a launchpad for further attacks.</li>
+                                <li><strong>Example:</strong> The attacker uses the C2 channel to navigate the target network, locate sensitive financial documents, and upload them to their own server. Alternatively, they might deploy ransomware to encrypt files and demand payment.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <br>
+                    <p class="mb-4"><strong>(b) Importance of Understanding the Cyber Kill Chain and Defensive Actions</strong></p>
+                    <p class="mb-3">Understanding the Cyber Kill Chain is crucial for network defense because it provides a framework to:</p>
+                    <ul class="list-disc list-inside space-y-2 mb-4">
+                        <li>Analyze attacker tactics, techniques, and procedures (TTPs).</li>
+                        <li>Identify potential points of intervention to disrupt or block an attack at various stages.</li>
+                        <li>Develop and implement a layered security approach, with controls at each stage.</li>
+                        <li>Improve incident response by understanding how far an attacker has progressed.</li>
+                    </ul>
+                    <p class="mb-3"><strong>Defensive Actions:</strong></p>
+                    <ul class="list-disc list-inside space-y-3">
+                        <li><strong>Delivery Stage:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Potential Defensive Action:</strong> Implement robust <strong>email security gateways</strong> with advanced threat protection features. These can scan email attachments and links for known malware, phishing indicators, and malicious content, blocking or quarantining suspicious emails before they reach the user. User awareness training on identifying phishing emails is also key.</li>
+                            </ul>
+                        </li>
+                        <li class="mt-3"><strong>Installation Stage:</strong>
+                            <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                                <li><strong>Potential Defensive Action:</strong> Employ <strong>endpoint detection and response (EDR)</strong> solutions or host-based intrusion prevention systems (HIPS). These tools can monitor endpoint behavior for suspicious activities indicative of malware installation (e.g., unauthorized registry changes, creation of new services, unexpected file drops) and can block these actions or alert security personnel. Application whitelisting can also prevent unauthorized software from running.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <br>
+                    <p class="mb-4"><strong>(c) Firewall vs. IDS</strong></p>
+                    <p class="mb-3"><strong>Firewall:</strong></p>
+                    <ul class="list-disc list-inside space-y-2 mb-4">
+                        <li><strong>Primary Function:</strong> A network security device that monitors incoming and outgoing network traffic and decides whether to allow or block specific traffic based on a defined set of security rules (e.g., ACLs based on IP addresses, ports, protocols).</li>
+                        <li><strong>Operation:</strong> Acts as a barrier between a trusted internal network and untrusted external networks (like the internet). Its main goal is to <em>prevent</em> unauthorized access by filtering traffic.</li>
+                        <li><strong>Analogy:</strong> A security guard at a gate who checks IDs and allows or denies entry based on a list.</li>
+                    </ul>
+                    <p class="mb-3"><strong>Intrusion Detection System (IDS):</strong></p>
+                    <ul class="list-disc list-inside space-y-2 mb-4">
+                        <li><strong>Primary Function:</strong> A device or software application that monitors network or system activities for malicious activities or policy violations and produces reports to a management station.</li>
+                        <li><strong>Operation:</strong> An IDS <em>detects</em> potential intrusions or attacks, often by analyzing network traffic for known attack signatures or anomalous behavior. It primarily <em>alerts</em> administrators rather than actively blocking traffic (though an IPS, Intrusion Prevention System, can take action).</li>
+                        <li><strong>Analogy:</strong> A surveillance camera system with an alarm that notifies security if something suspicious is detected.</li>
+                    </ul>
+                    <p class="mb-3"><strong>Key Differences:</strong></p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li><strong>Action:</strong> Firewalls primarily <em>prevent</em> by blocking traffic based on rules. IDSs primarily <em>detect</em> and alert.</li>
+                        <li><strong>Focus:</strong> Firewalls focus on controlling access based on predefined rules (ports, IPs). IDSs focus on identifying malicious patterns or anomalies within allowed traffic.</li>
+                        <li><strong>Placement:</strong> Firewalls are typically placed at network perimeters. IDSs can be network-based (NIDS) or host-based (HIDS) and can monitor traffic within the network or on individual hosts.</li>
+                    </ul>
+                    <p class="mt-3">An Intrusion Prevention System (IPS) combines the detection capabilities of an IDS with the ability to actively block or prevent detected threats, making it more similar to a firewall in its ability to take action, but with a focus on threat signatures and behavior rather than just static rules.</p>
+                `
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        const questionTitleEl = document.getElementById('question-title');
+        const imageWrapperEl = document.getElementById('image-placeholder-wrapper');
+        const questionImageEl = document.getElementById('question-image');
+        const questionTextEl = document.getElementById('question-text');
+        const userAnswerEl = document.getElementById('user-answer');
+        const submitAnswerBtn = document.getElementById('submit-answer-btn');
+        const correctAnswerSectionEl = document.getElementById('correct-answer-section');
+        const correctAnswerContentEl = document.getElementById('correct-answer-content');
+        const navContainer = document.querySelector('nav');
+        const darkModeToggleBtn = document.getElementById('dark-mode-toggle');
+        const htmlEl = document.documentElement;
+
+        function applyTheme(isDark) {
+            if (isDark) {
+                htmlEl.classList.add('dark');
+                darkModeToggleBtn.textContent = 'Toggle Light Mode';
+            } else {
+                htmlEl.classList.remove('dark');
+                darkModeToggleBtn.textContent = 'Toggle Dark Mode';
+            }
+            updateNavButtonStyles();
+        }
+        
+        function updateNavButtonStyles() {
+            document.querySelectorAll('nav button').forEach((btn, i) => {
+                const isDark = htmlEl.classList.contains('dark');
+                // Reset all theme-dependent classes
+                btn.classList.remove(
+                    'bg-indigo-600', 'text-white', 'dark:bg-indigo-500', 'dark:hover:bg-indigo-600',
+                    'bg-gray-200', 'text-gray-700', 'hover:bg-gray-300', 
+                    'dark:bg-gray-600', 'dark:text-gray-200', 'dark:hover:bg-gray-500' // Adjusted dark secondary
+                );
+                if (i === currentQuestionIndex) {
+                    btn.classList.add('bg-indigo-600', 'text-white', 'dark:bg-indigo-500', 'dark:hover:bg-indigo-600');
+                } else {
+                     if (isDark) {
+                        btn.classList.add('dark:bg-gray-600', 'dark:text-gray-200', 'dark:hover:bg-gray-500');
+                    } else {
+                        btn.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+                    }
+                }
+            });
+        }
+
+        function toggleDarkMode() {
+            const isDarkMode = htmlEl.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDarkMode);
+            applyTheme(isDarkMode);
+        }
+        
+        darkModeToggleBtn.addEventListener('click', toggleDarkMode);
+
+        function loadQuestion(index) {
+            currentQuestionIndex = index;
+            const question = examData[index];
+
+            questionTitleEl.textContent = question.title;
+            
+            if (question.imagePlaceholderURL) {
+                questionImageEl.src = question.imagePlaceholderURL;
+                questionImageEl.alt = question.imageAltText;
+                imageWrapperEl.classList.remove('hidden');
+            } else {
+                imageWrapperEl.classList.add('hidden');
+            }
+
+            questionTextEl.innerHTML = question.questionHTML;
+            userAnswerEl.value = '';
+            correctAnswerSectionEl.classList.add('hidden');
+            correctAnswerContentEl.innerHTML = '';
+
+            updateNavButtonStyles();
+            // Smooth scroll to the top of the main content card, not the whole page
+            const mainCard = document.getElementById('question-container');
+            if (mainCard) {
+                 mainCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function showAnswer() {
+            const question = examData[currentQuestionIndex];
+            correctAnswerContentEl.innerHTML = question.answerHTML;
+            correctAnswerSectionEl.classList.remove('hidden');
+            correctAnswerSectionEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function createNavButtons() {
+            navContainer.innerHTML = ''; 
+            examData.forEach((question, index) => {
+                const button = document.createElement('button');
+                button.textContent = `Q${index + 1}`;
+                button.classList.add('btn', 'py-2', 'px-4', 'rounded-lg', 'text-sm', 'font-semibold', 'shadow-sm', 'transition-colors', 'duration-150');
+                button.addEventListener('click', () => loadQuestion(index));
+                navContainer.appendChild(button);
+            });
+        }
+        
+        submitAnswerBtn.addEventListener('click', showAnswer);
+
+        // Initialize
+        createNavButtons();
+        const initialDarkMode = localStorage.getItem('darkMode') === 'true';
+        applyTheme(initialDarkMode); // Apply theme first
+        loadQuestion(0); // Then load question which also updates nav buttons based on theme
+
+
+    </script>
+</body>
+</html>
